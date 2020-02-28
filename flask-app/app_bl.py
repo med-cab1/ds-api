@@ -8,7 +8,7 @@ import requests
 from flask_sqlalchemy import sqlalchemy
 
 
-def creaate_app():
+def create_app():
 
     APP = Flask(__name__)
 
@@ -53,7 +53,7 @@ def creaate_app():
 
             condition_id = cannabis.condition_id.condition_id ####unsure on this
             flavor_id = cannabis.flavor_id
-            effect_id = cannabis.effect_id.effect_id ###unsure on this 
+            effect_id = cannabis.effect_id.effect_id ###unsure on this
             ###where does strain factor into all this
 
             df = pd.DataFrame(
@@ -75,7 +75,7 @@ def creaate_app():
 
             pipeline.fit(X_train, y_train)
             y_pred = pipeline.predict(df)
-            
+
             ### need to refine the list process rough outline of idea behind it....
             top_5 = []
             lenght = 5
@@ -113,7 +113,7 @@ def creaate_app():
 
             condition_id = cannabis.condition_id.condition_id ####unsure on this
             flavor_id = cannabis.flavor_id
-            effect_id = cannabis.effect_id.effect_id ###unsure on this 
+            effect_id = cannabis.effect_id.effect_id ###unsure on this
             ###where does strain factor into all this
 
             df = pd.DataFrame(
@@ -131,7 +131,3 @@ def creaate_app():
         init_db()
         #return render_template('####.html', title='DB Reset')
     return app
-
-
-
-
