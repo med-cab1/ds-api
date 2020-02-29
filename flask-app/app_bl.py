@@ -4,6 +4,7 @@
 ##NOTE -- THIS IS JUST A SKELETON, MORE WORK TO BE DONE AND REFINING NEEDED##
 
 from flask import Flask, render_template
+from .functions import *
 import requests
 from flask_sqlalchemy import sqlalchemy
 
