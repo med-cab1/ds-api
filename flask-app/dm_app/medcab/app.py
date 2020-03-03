@@ -13,10 +13,10 @@ def create_app():
 
     @app.route('/prediction', methods=['GET'])
     def api_return():
-        prediction = get_prediction(request)
-        disease = disease_filter(request['disease'])
-        json = jsonify(strains=prediction, info=disease)
         
+        prediction = get_prediction(request)
+        disease = disease_filter(request.args.get('disease'))
+        json = jsonify(strains=prediction, info=disease)
         return json
-
+        
     return app

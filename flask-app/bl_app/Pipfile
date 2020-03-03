@@ -9,6 +9,11 @@ verify_ssl = true
 flask = "*"
 requests = "*"
 pandas = "*"
+spacy = "*"
+sklearn = "*"
+pathlib = "*"
+os = "*"
+tokenize = "*"
 
 [requires]
 python_version = "3.7"

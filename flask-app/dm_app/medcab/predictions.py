@@ -7,6 +7,7 @@ from sklearn.neighbors import NearestNeighbors
 
 # pickles
 BASE_DIR = Path(__file__).parents[3]
+#TO-DO work on a better method to access pkl as this is causing a bug in heroku
 dtm = pickle.load(open(os.path.join(BASE_DIR, 'dtm.pkl'), 'rb'))
 tf = pickle.load(open(os.path.join(BASE_DIR, 'tf.pkl'), 'rb'))
 
@@ -25,9 +26,9 @@ def get_prediction(data):
     nn.fit(dtm)
 
     # load request data, transform, get results
-    entry = [data['effect1'], data['effect2'], data['effect3'],
-              data['effect4'], data['effect5'], data['flavor1'],
-              data['flavor2'], data['flavor3']]
+    entry = [data.args.get('effect1'), data.args.get('effect2'), data.args.get('effect3'),
+              data.args.get('effect4'), data.args.get('effect5'), data.args.get('flavor1'),
+              data.args.get('flavor2'), data.args.get('flavor3')]
     new = tf.transform(entry)
     results = nn.kneighbors(new.todense())
     
@@ -35,6 +36,7 @@ def get_prediction(data):
     output = [strains['Strain'][results[1][0][i]] for i in range(5)]
     
     return output
+
 
 """
 Example:
