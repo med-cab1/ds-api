@@ -6,18 +6,25 @@ from pathlib import Path
 from sklearn.neighbors import NearestNeighbors
 
 # Load Pickle Models
-#dtm = pickle.load(https://github.com/med-cab1/ds-api/blob/master/dtm.pkl)
-#tf = pickle.load(https://github.com/med-cab1/ds-api/blob/master/tf.pkl)
+#base_dir = Path(__file__) #returns web_app/prediction.py
 
-BASE = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'web_app'))
-print(BASE)
-dtm = pickle.load(open(os.path.join(BASE, 'dtm.pkl'), 'rb'))
-tf = pickle.load(open(os.path.join(BASE, 'tf.pkl'), 'rb'))
+# base_dir_par = Path(__file__).parent #returns web_app
+# print(base_dir_par)
+
+# BASE = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'web_app')) #returns /Users/blakelobato/Desktop/med_cab/flask-app/bl_app/web_app
+
+
+# dtm = pickle.load(open(os.path.join(base_dir_par, 'dtm.pkl'), 'rb'))
+# tf = pickle.load(open(os.path.join(base_dir_par, 'tf.pkl'), 'rb'))
+
+dtm = pickle.load(open('dtm.pkl', 'rb'))
+tf = pickle.load(open('tf.pkl', 'rb'))
 
 
 def get_prediction(data):
     """use request data passed to make prediction"""
 
+    #load in data
     df = pd.read_csv("https://raw.githubusercontent.com/med-cab1/ds-api/master/data/cannabis.csv")
     disease = pd.read_csv("https://raw.githubusercontent.com/med-cab1/ds-api/master/data/Disease.csv")
 
@@ -26,14 +33,15 @@ def get_prediction(data):
     nn = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
     nn.fit(dtm)
 
-     # load request data, transform, get results
+     # load requests
     entry = [data.args.get('effect1'), data.args.get('effect2'), data.args.get('effect3'), data.args.get('effect4'),data.args.get('effect5'), data.args.get('flavor1'),data.args.get('flavor2'), data.args.get('flavor3')]
 
+    #transform the data
     new = tf.transform(entry)
     results = nn.kneighbors(new.todense())
 
     # extract top 5 results
-    weed_types = [strains['Strain'][results[1][0][i]] for i in range(5)]
+    weed_types = [df['Strain'][results[1][0][i]] for i in range(5)]
 
     return weed_types
 
