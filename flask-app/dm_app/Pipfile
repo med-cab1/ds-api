@@ -9,6 +9,9 @@ verify_ssl = true
 flask = "*"
 pandas = "*"
 gunicorn = "*"
+scikit-learn = "*"
+pathlib = "*"
+spacy = "*"
 
 [requires]
 python_version = "3.7"

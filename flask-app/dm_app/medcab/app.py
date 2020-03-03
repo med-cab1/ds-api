@@ -2,6 +2,7 @@
 
 from flask import Flask, request, jsonify
 from .predictions import get_prediction
+from .functions import disease_filter
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,9 @@ def create_app():
     @app.route('/prediction', methods=['GET'])
     def api_return():
         prediction = get_prediction(request)
-        return jsonify(str(prediction))
+        disease = disease_filter(request['disease'])
+        json = jsonify(strains=prediction, info=disease)
+        
+        return json
 
     return app

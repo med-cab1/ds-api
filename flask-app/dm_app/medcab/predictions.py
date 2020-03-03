@@ -1,28 +1,40 @@
 """make prediction based on request data sent over"""
+import os
 import pandas as pd
 import pickle
-import os
+from pathlib import Path
+from sklearn.neighbors import NearestNeighbors
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL = os.path.join(BASE_DIR, 'model.pkl')
+# pickles
+BASE_DIR = Path(__file__).parents[3]
+dtm = pickle.load(open(os.path.join(BASE_DIR, 'dtm.pkl'), 'rb'))
+tf = pickle.load(open(os.path.join(BASE_DIR, 'tf.pkl'), 'rb'))
+
+# data
+URL = "https://raw.githubusercontent.com/med-cab1/ds-api/master/data/cannabis.csv" 
 
 def get_prediction(data):
     """use request data passed to make prediction"""
-    
-    # load data from GET request into dataframe
-    input = pd.DataFrame(
-        columns=['disease', 'effect1', 'effect2', 'effect3',
-                 'effect4', 'effect5', 'flavor1', 'flavor2',
-                 'flavor3'],
-        data=[data['disease'], data['effect2'], data['effect3'],
+    # load cannabis data
+    strains = pd.read_csv(URL)
+    # Combine the Effects and Flavors in one column
+    strains['Criteria'] = strains['Effects'] + ',' + strains['Flavor']
+
+    # Train model on dtm
+    nn = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
+    nn.fit(dtm)
+
+    # load request data, transform, get results
+    entry = [data['effect1'], data['effect2'], data['effect3'],
               data['effect4'], data['effect5'], data['flavor1'],
               data['flavor2'], data['flavor3']]
-    )
-
-    # load model from pickle file
-    model = pickle.loads(MODEL)
+    new = tf.transform(entry)
+    results = nn.kneighbors(new.todense())
     
-    return model.predict(input)[:5] #return first 5 predictions
+    # extract top 5 results
+    output = [strains['Strain'][results[1][0][i]] for i in range(5)]
+    
+    return output
 
 """
 Example:
