@@ -11,7 +11,7 @@ def create_app():
     def root():
         return 'This Works'
 
-    @app.route('/prediction', methods=['GET'])
+    @app.route('/prediction', methods=['GET', 'POST'])
     def api_return():
         prediction = get_prediction(request)
         disease = disease_filter(request.args.get('disease'))
