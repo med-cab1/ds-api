@@ -19,4 +19,30 @@ def create_app():
         json = jsonify(strains=prediction, info=disease)
         return json
 
+
+    @app.route('/altpredict', methods=['GET', 'POST'])
+    def json_return():
+        json_form = request.form
+        json_args = request.args
+        # This returns a dict from the front-end
+        print(json_form)
+        print(json_args)
+
+        sample =  {'disease':'Glaucoma',
+        'effect1':'Creative',
+        'effect2':'Energetic',
+        'effect3':'Tingly',
+        'effect4':'Euphoric',
+        'effect5':'Relaxed',
+        'flavor1':'Earthy',
+        'flavor2':'Sweet',
+        'flavor3':'Citrus'}
+        # Transforms the json received from users
+        prediction = get_prediction(json_form)
+        disease = disease_filter(request.form.get('disease'))
+        # Stores predict_dict in the session, so it can be gotten from /data
+        # session['price'] = predict_dict
+        json = jsonify(strains=prediction, info=disease)
+        return json
+
     return app
