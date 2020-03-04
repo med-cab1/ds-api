@@ -24,10 +24,11 @@ def get_prediction(data):
     nn = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
     nn.fit(dtm)
 
-    # load request data, transform, get results
-    entry = [data.args.get('effect1'), data.args.get('effect2'), data.args.get('effect3'),
-              data.args.get('effect4'), data.args.get('effect5'), data.args.get('flavor1'),
-              data.args.get('flavor2'), data.args.get('flavor3')]
+    # load request data
+    r = data.args
+    entry = [v for k,v in r.items() if k !='disease']
+
+    #  transform
     new = tf.transform(entry)
     results = nn.kneighbors(new.todense())
     
