@@ -25,8 +25,8 @@ def get_prediction(data):
     nn.fit(dtm)
 
     # load request data
-    r = data.args
-    entry = [v for k,v in r.items() if k !='disease']
+    # r = data.args
+    entry = [v for k,v in data.items() if k !='disease']
 
     #  transform
     new = tf.transform(entry)

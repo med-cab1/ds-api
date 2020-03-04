@@ -7,6 +7,10 @@ def disease_filter(disease):
 
         Returns "Invalid Disease Entry" if disease name is not found.
     """
+
+    stripped_disease = disease.replace(" ", "")
+    stripped_disease = stripped_disease.replace("%20", "")
+    stripped_disease = stripped_disease.replace("+", "")
     disease_dict = {
     'Cancer-Pain': 'Daily Dosage: 17mg THC or 16mg CBD, in 6 sprays spread out over a 24-hour period.',
     'Cancer-Nausea': 'Daily Dosage: 10-18mg THC. Take a capsule 1 hr prior to chemo, then every 2-4 hrs over 12-24 hrs.',
@@ -24,7 +28,7 @@ def disease_filter(disease):
     'PTSD':	'Daily Dosage: 5mg THC.	Take 2 oral solutions, place under tongue.'
     }
 
-    return disease_dict.get(disease, 'Invalid Disease Entry')
+    return disease_dict.get(stripped_disease, 'Invalid Disease Entry')
 
 
 
