@@ -12,6 +12,7 @@ requests = "*"
 spacy = "*"
 sklearn = "*"
 pathlib = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
