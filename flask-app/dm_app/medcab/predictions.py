@@ -6,8 +6,7 @@ from pathlib import Path
 from sklearn.neighbors import NearestNeighbors
 
 # pickles
-BASE_DIR = Path(__file__).parents[3]
-#TO-DO work on a better method to access pkl as this is causing a bug in heroku
+BASE_DIR = Path(__file__).parents[0]
 dtm = pickle.load(open(os.path.join(BASE_DIR, 'dtm.pkl'), 'rb'))
 tf = pickle.load(open(os.path.join(BASE_DIR, 'tf.pkl'), 'rb'))
 
