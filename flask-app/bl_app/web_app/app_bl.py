@@ -29,7 +29,9 @@ def create_app():
     def predict():
         """Prediction route using pickling."""
         prediction = get_prediction(request)
-        return jsonify(str(prediction))
+        disease = disease_filter(request.args.get('disease'))
+        json = jsonify(Strains = prediction, Schedule = disease)
+        return json
 
     return APP
 

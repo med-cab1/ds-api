@@ -6,9 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+pandas = "*"
 flask = "*"
 requests = "*"
-pandas = "*"
+spacy = "*"
+sklearn = "*"
+pathlib = "*"
 
 [requires]
 python_version = "3.7"
