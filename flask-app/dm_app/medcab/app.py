@@ -23,9 +23,11 @@ def create_app():
     def json_return():
         json_form = request.form
         json_args = request.args
+        pure_json = request.json
         # This returns a dict from the front-end
         print(json_form)
         print(json_args)
+        print(pure_json)
 
         sample =  {'disease':'Glaucoma',
         'effect1':'Creative',
@@ -41,8 +43,8 @@ def create_app():
         disease = disease_filter(request.form.get('disease'))
         # Stores predict_dict in the session, so it can be gotten from /data
         # session['price'] = predict_dict
-        json = jsonify(strains=prediction, info=disease)
-        return json
+        altjson = jsonify(strains=prediction, info=disease)
+        return altjson
 
     """
     #test POST method with json data
