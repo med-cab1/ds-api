@@ -19,7 +19,6 @@ def create_app():
         json = jsonify(strains=prediction, info=disease)
         return json
 
-
     @app.route('/altpredict', methods=['GET', 'POST'])
     def json_return():
         json_form = request.form
@@ -45,4 +44,29 @@ def create_app():
         json = jsonify(strains=prediction, info=disease)
         return json
 
+    """
+    #test POST method with json data
+    test_case = {'disease':'Glaucoma',
+                'effect1':'Creative',
+                'effect2':'Energetic',
+                'effect3':'Tingly',
+                'effect4':'Euphoric',
+                'effect5':'Relaxed',
+                'flavor1':'Earthy',
+                'flavor2':'Sweet',
+                'flavor3':'Citrus'
+                }
+    test_result = {'info': 'Daily Dosage: 5mg THC. Take 1 capsule.',
+                  'strains': ['Blueberry-Trainwreck', 
+                              'Boggle-Gum',
+                              'Kid-N-Cookies',
+                              'Cronuts',
+                              'Huckleberry-Hound']
+                              }
+    with app.test_client() as c:
+        rv = c.post('/prediction', json=test_case)
+        json_data = rv.get_json()
+        assert json_data == test_result
+    """
+    
     return app
