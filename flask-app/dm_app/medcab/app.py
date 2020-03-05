@@ -23,11 +23,9 @@ def create_app():
     def json_return():
         json_form = request.form
         json_args = request.args
-        pure_json = request.json
         # This returns a dict from the front-end
-        print(json_form)
+        print([x for x in json_form.values()][0])
         print(json_args)
-        print(pure_json)
 
         sample =  {'disease':'Glaucoma',
         'effect1':'Creative',
@@ -40,7 +38,9 @@ def create_app():
         'flavor3':'Citrus'}
         # Transforms the json received from users
         prediction = get_prediction(json_form)
-        disease = disease_filter(request.form.get('disease'))
+
+        # This gets the first value of the first key of the json dictionary
+        disease = disease_filter([x for x in json_form.values()][0])
         # Stores predict_dict in the session, so it can be gotten from /data
         # session['price'] = predict_dict
         altjson = jsonify(strains=prediction, info=disease)
@@ -59,7 +59,7 @@ def create_app():
                 'flavor3':'Citrus'
                 }
     test_result = {'info': 'Daily Dosage: 5mg THC. Take 1 capsule.',
-                  'strains': ['Blueberry-Trainwreck', 
+                  'strains': ['Blueberry-Trainwreck',
                               'Boggle-Gum',
                               'Kid-N-Cookies',
                               'Cronuts',
@@ -70,5 +70,5 @@ def create_app():
         json_data = rv.get_json()
         assert json_data == test_result
     """
-    
+
     return app
