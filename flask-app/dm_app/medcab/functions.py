@@ -29,6 +29,3 @@ def disease_filter(disease):
     }
 
     return disease_dict.get(stripped_disease, 'Invalid Disease Entry')
-
-
-
