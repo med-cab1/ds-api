@@ -27,12 +27,12 @@ def get_prediction(data):
     # load request data
     # r = data.args
     entry = [v for k,v in data.items()][1:]
-    print(entry)
+    #print(entry)
     #  transform
     new = tf.transform(entry)
-    print(new)
+    #print(new)
     results = nn.kneighbors(new.todense())
-    print(results)
+    #print(results)
     # extract top 5 results
     output = [strains['Strain'][results[1][0][i]] for i in range(5)]
 
